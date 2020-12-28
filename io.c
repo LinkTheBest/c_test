@@ -18,7 +18,7 @@ void error_print(int64_t err) {
 
 enum read_status read_header(FILE* const file_path, struct bmp_header* const header) {
 	fread(header, sizeof(struct bmp_header), 1, file_path);
-	//проверяем заголовки на дефекты
+	
 	if (header->bfType != 0x4D42)
 		return READ_INVALID_SIGNATURE;	
 	 if(header -> biBitCount != 24)
@@ -54,8 +54,9 @@ enum read_status read_header(FILE* const file_path, struct bmp_header* const hea
 		img->data = malloc(height * width * sizeof(struct pixel));
 		img->height = height;
 		img->width = width;
-		// считывание матрицы пикселей
+		
 		error = read_pixels(file_path, header, img->data);
+		free(header);
 		return error;
 }
 
@@ -65,8 +66,6 @@ enum write_status to_bmp(FILE* const file_path, struct image const * img) {
 
 	int64_t w = img->width;
 	int64_t h = img->height;
-	// printf("write_width : %d\n", w);
-	// printf("write_height: %d\n", h);
 	int64_t padding = (4 - (w * sizeof(struct pixel)) % 4) % 4;
 	int64_t i_size = (w * sizeof(struct pixel) + padding)*h;
 	int64_t f_size = sizeof(struct bmp_header) + i_size;

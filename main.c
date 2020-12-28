@@ -28,15 +28,15 @@ int main(int argc, char *argv[]){
         output_path = argv[2];
     }
 
-	// открываем файл для чтения
+	
 	FILE *file_path = fopen(input_path, "r+b");
 	if (file_path == NULL) {
 		printf(">> BMP not found <<");
 		return 1;
 	}
-	// выделяем память под изображение
+	
 	struct image* img = (struct image*)malloc(sizeof(struct image));
-	// считываем изображение, проверяя корректность
+
 	int err = from_bmp(file_path, img);
 	fclose(file_path);
 	if (err) {
@@ -44,8 +44,8 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	// поворот на 90 по часовой стрелке	
 	rotate(img, RIGHT);
+
 	FILE *right_img = fopen(output_path, "w+b");
 	if (to_bmp(right_img, img))
 		printf(" >> Rotation error! << \n");
