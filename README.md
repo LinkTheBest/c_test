@@ -1,2 +1,5 @@
-##This is C language lab repo
-# c_test
+# This is C language lab repo
+* More further information at:
+  * https://gitlab.se.ifmo.ru/c-language/assignment-image-rotation
+  
+
