@@ -23,6 +23,7 @@ int main(int argc, char *argv[]){
     const char *input_path = argv[1];
     const char *output_path;
     if (argc < 3) {
+		printf(ANSI_COLOR_RED "No output source, file will be saved in root directory!\n" ANSI_COLOR_RESET);
         output_path = DEFAULT_OUTPUT_PATH;
     } else {
         output_path = argv[2];
@@ -50,7 +51,7 @@ int main(int argc, char *argv[]){
 	if (to_bmp(right_img, img))
 		printf(" >> Rotation error! << \n");
 	rotate(img, LEFT);
-	printf("Done! \n");
+	printf( ANSI_COLOR_MAGENTA "Done! \n" ANSI_COLOR_RESET);
 	free(img);
 	fclose(right_img);
 	return 0;
