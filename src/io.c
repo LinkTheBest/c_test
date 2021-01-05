@@ -1,20 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
-#include "error_printing.h"
 #include "bmp_io.h"
 #include "bmp_main.h"
-
-void error_print(int64_t err) {
-	switch (err) {
-		case 1: fprintf(stderr,">> INVALID SIGNATURE <<\n"); break;
-		case 2:	fprintf(stderr,">> INVALID RESERVED <<\n"); break;
-		case 3:	fprintf(stderr,">> INVALID HEADER <<\n"); break;
-		case 4: fprintf(stderr,">> INVALID OFFSET PIXELS <<\n"); break;
-		case 5:	fprintf(stderr,">> FILE CORRUPTED <<\n"); break;
-	}
-}
-
 
 enum read_status read_header(FILE* const file_path, struct bmp_header* const header) {
 	fread(header, sizeof(struct bmp_header), 1, file_path);

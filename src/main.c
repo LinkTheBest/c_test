@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "error_printing.h"
 #include "bmp_main.h"
 #include "bmp_io.h"
 #include "image_rotation.h"
@@ -35,24 +34,23 @@ int main(int argc, char *argv[]){
 	
 	FILE *file_path = fopen(input_path, "r+b");
 	if (file_path == NULL) {
-		printf(stderr,">> BMP not found <<");
+		printf(">> BMP not found <<");
 		return 1;
 	}
 	
 	struct image img;
 
-	int64_t err = from_bmp(file_path, &img);
+	enum read_status err = from_bmp(file_path, &img);
 	fclose(file_path);
 	if (err) {
-		error_print(err);
-		return 1;
+		return err;
 	}
 
 	rotate(&img, RIGHT);
 
 	FILE *right_img = fopen(output_path, "w+b");
 	if (to_bmp(right_img, &img))
-		fprintf(stderr, " >> Rotation error! << \n");
+		printf(" >> Rotation error! << \n");
 	rotate(&img, LEFT);
 	MAGENTA("Done! \n" );
 	RESET("");
