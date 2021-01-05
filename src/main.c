@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
 	
 	FILE *file_path = fopen(input_path, "r+b");
 	if (file_path == NULL) {
-		printf(">> BMP not found <<");
+		printf(stderr,">> BMP not found <<");
 		return 1;
 	}
 	
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
 
 	FILE *right_img = fopen(output_path, "w+b");
 	if (to_bmp(right_img, &img))
-		printf(" >> Rotation error! << \n");
+		fprintf(stderr, " >> Rotation error! << \n");
 	rotate(&img, LEFT);
 	MAGENTA("Done! \n" );
 	RESET("");

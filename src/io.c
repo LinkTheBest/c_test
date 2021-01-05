@@ -7,11 +7,11 @@
 
 void error_print(int64_t err) {
 	switch (err) {
-		case 1: printf(">> INVALID SIGNATURE <<\n"); break;
-		case 2:	printf(">> INVALID RESERVED <<\n"); break;
-		case 3:	printf(">> INVALID HEADER <<\n"); break;
-		case 4: printf(">> INVALID OFFSET PIXELS <<\n"); break;
-		case 5:	printf(">> FILE CORRUPTED <<\n"); break;
+		case 1: fprintf(stderr,">> INVALID SIGNATURE <<\n"); break;
+		case 2:	fprintf(stderr,">> INVALID RESERVED <<\n"); break;
+		case 3:	fprintf(stderr,">> INVALID HEADER <<\n"); break;
+		case 4: fprintf(stderr,">> INVALID OFFSET PIXELS <<\n"); break;
+		case 5:	fprintf(stderr,">> FILE CORRUPTED <<\n"); break;
 	}
 }
 
