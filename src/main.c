@@ -4,26 +4,29 @@
 #include "bmp_main.h"
 #include "bmp_io.h"
 #include "image_rotation.h"
+#include "image_struct.h"
 
-#define DEFAULT_OUTPUT_PATH "output.bmp"
-#define ANSI_COLOR_RED     "\x1b[31m"
-#define ANSI_COLOR_GREEN   "\x1b[32m"
-#define ANSI_COLOR_MAGENTA "\x1b[35m"
-#define ANSI_COLOR_BLUE    "\x1b[34m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
+#define RED(...){ printf(ANSI_COLOR_RED __VA_ARGS__);}
+#define BLUE(...){ printf(ANSI_COLOR_BLUE __VA_ARGS__);}
+#define GREEN(...){ printf(ANSI_COLOR_GREEN __VA_ARGS__);}
+#define MAGENTA(...){ printf(ANSI_COLOR_MAGENTA __VA_ARGS__);}
+#define RESET(...){ printf(ANSI_COLOR_RESET __VA_ARGS__);}
 
 int main(int argc, char *argv[]){
 
 	if (argc <2) {
-        printf(ANSI_COLOR_RED "Invalid arguments! \n"  ANSI_COLOR_BLUE "Example:" 
-		ANSI_COLOR_GREEN " input_directory/input_file.bmp " ANSI_COLOR_MAGENTA "outut_directory/output_file.bmp\n" 
-		ANSI_COLOR_RESET);
+		RED("Invalid arguments! \n");
+		BLUE("Example:");
+		GREEN(" input_directory/input_file.bmp ");
+		MAGENTA("outut_directory/output_file.bmp\n")
+		RESET("");
         return 1;
     }
     const char *input_path = argv[1];
     const char *output_path;
     if (argc < 3) {
-		printf(ANSI_COLOR_RED "No output source, file will be saved in root directory!\n" ANSI_COLOR_RESET);
+		RED("No output source, file will be saved in root directory!\n");
+		RESET("");
         output_path = DEFAULT_OUTPUT_PATH;
     } else {
         output_path = argv[2];
@@ -36,23 +39,23 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 	
-	struct image* img = (struct image*)malloc(sizeof(struct image));
+	struct image img;
 
-	int err = from_bmp(file_path, img);
+	int64_t err = from_bmp(file_path, &img);
 	fclose(file_path);
 	if (err) {
 		error_print(err);
 		return 1;
 	}
 
-	rotate(img, RIGHT);
+	rotate(&img, RIGHT);
 
 	FILE *right_img = fopen(output_path, "w+b");
-	if (to_bmp(right_img, img))
+	if (to_bmp(right_img, &img))
 		printf(" >> Rotation error! << \n");
-	rotate(img, LEFT);
-	printf( ANSI_COLOR_MAGENTA "Done! \n" ANSI_COLOR_RESET);
-	free(img);
+	rotate(&img, LEFT);
+	MAGENTA("Done! \n" );
+	RESET("");
 	fclose(right_img);
 	return 0;
 }

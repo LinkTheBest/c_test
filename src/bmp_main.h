@@ -23,15 +23,5 @@ struct __attribute__((packed)) bmp_header
 
 };
 
- struct pixel {
-	uint8_t b, g, r;
-};
-
-
- struct image {
-	uint64_t width, height;
-	struct pixel* data;
-};
-
 #endif
 
