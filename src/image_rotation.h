@@ -3,7 +3,7 @@
 
 #include "bmp_main.h"
 
-void rotate(struct image*, enum side);
+struct image rotate(struct image*, enum side);
 
 
 #endif

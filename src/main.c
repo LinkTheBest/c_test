@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
 		return err;
 	}
 
-	rotate(&img, RIGHT);
+	img = rotate(&img, RIGHT);
 
 	FILE *right_img = fopen(output_path, "w+b");
 	if (to_bmp(right_img, &img))
