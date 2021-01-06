@@ -46,6 +46,10 @@ enum read_status read_header(FILE* const file_path, struct bmp_header* const hea
 		return error;
 }
 
+void padding_calculation(struct image const* img, int64_t *padding){
+	*padding = (4 - (img->width * sizeof(struct pixel)) % 4) % 4;
+}
+
 void generate_header(struct image const * img, struct bmp_header *header, int64_t padding ){
 	int64_t w = img->width;
 	int64_t h = img->height;
@@ -74,7 +78,8 @@ enum write_status to_bmp(FILE* const file_path, struct image const * img) {
 	struct bmp_header header ;
 	int64_t w = img->width;
 	int64_t h = img->height;
-	int64_t padding = (4 - (w * sizeof(struct pixel)) % 4) % 4;
+	int64_t padding;
+	padding_calculation(img, &padding);
 	generate_header(img, &header, padding);
 
 	if (fwrite(&header, 1, sizeof(header), file_path) != sizeof(header))
