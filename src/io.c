@@ -84,8 +84,6 @@ enum write_status to_bmp(FILE* const file_path, struct image const * img) {
 		fwrite(matrix + (i*w), sizeof(struct pixel), w, file_path);
 		fwrite(&padding, 1, padding, file_path);
 	}
-	if (fclose(file_path) == EOF) 
-		return WRITE_ERROR;
 	free(matrix);
 	return WRITE_OK;
 }
